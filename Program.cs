@@ -1,7 +1,10 @@
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using PokemonReviewAPI.Data;
+using PokemonReviewAPI.Helper;
+using PokemonReviewAPI.Repository;
+using PokemonReviewAPI.Services.Contracts;
+using PokemonReviewAPI.Services.Implementation;
 
 namespace PokemonReviewAPI
 {
@@ -18,6 +21,9 @@ namespace PokemonReviewAPI
 			});
 			builder.Services.AddTransient<Seed>();
 			builder.Services.AddScoped<DbContext, AppDbContext>();
+			builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+			builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+			builder.Services.AddScoped<IPokemonServices, PokemonServices>();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
