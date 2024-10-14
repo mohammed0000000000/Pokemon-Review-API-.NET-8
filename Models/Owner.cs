@@ -9,5 +9,7 @@
 		public int CounteryId { get; set; }	
 		public Country Country { get; set; }
 
+		public ICollection<PokemonOwner> PokemonOwners { get; set; } = new List<PokemonOwner>();	
+
     }
 }
