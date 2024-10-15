@@ -56,6 +56,7 @@ namespace PokemonReviewAPI.Repository
 			context.Entry(entity).State = EntityState.Detached;
 			return true;
 		}
+
 	}
 
 }
