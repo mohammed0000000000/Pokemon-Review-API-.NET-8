@@ -22,7 +22,7 @@ namespace PokemonReviewAPI.Controllers
 
 		[HttpGet("{id:int}")]
 		[ProducesResponseType(200, Type =typeof(PokemonDto))]
-		[ProducesResponseType(400)]
+		[ProducesResponseType(statusCode: 400)]
 		public async Task<IActionResult>GetPokemon(int id){
 			var res = await services.GetPokemon(id);
 			if (res is null)
