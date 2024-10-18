@@ -10,8 +10,8 @@ namespace PokemonReviewAPI.DTO
 		public string Gym { get; set; }
 
 		public int CounteryId { get; set; }
-		public Country Country { get; set; }
+		//public Country Country { get; set; }
 
-		public ICollection<PokemonOwner> PokemonOwners { get; set; } = new List<PokemonOwner>();
+		//public ICollection<PokemonOwner> PokemonOwners { get; set; } = new List<PokemonOwner>();
 	}
 }

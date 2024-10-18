@@ -46,7 +46,5 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.GetOwners(id);
 			return res is null ? BadRequest() : Ok(res);
 		}
-
-
 	}
 }
