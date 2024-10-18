@@ -27,6 +27,7 @@ namespace PokemonReviewAPI
 			builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 			builder.Services.AddScoped<ICountryServices, CountryServices>();
 			builder.Services.AddScoped<IOwnerServices, OwnerServices>();
+			builder.Services.AddScoped<IReviewServices, ReviewServices>();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
