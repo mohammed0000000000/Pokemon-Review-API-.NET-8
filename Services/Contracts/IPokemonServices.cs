@@ -9,5 +9,6 @@ namespace PokemonReviewAPI.Services.Contracts
 		Task<PokemonDto> GetPokemon(string name);	
 		Task<decimal> GetPokemonRating(int id);
 		Task<bool> PokemonExists(int id);
+		Task<bool> CreatePokemon(CreatePokemonDto pokemon);
 	}
 }

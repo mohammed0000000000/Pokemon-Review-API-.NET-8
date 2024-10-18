@@ -19,6 +19,7 @@ namespace PokemonReviewAPI.Services.Implementation
 			this.context = context;
 			this.mapper = mapper;
 		}
+
 		public async Task<ReviewerDto> GetReviewer(int id) {
 			var model = await repository.GetbyId(id);
 			var reviewer = mapper.Map<ReviewerDto>(model);
@@ -39,6 +40,11 @@ namespace PokemonReviewAPI.Services.Implementation
 
 		public async Task<bool> ReviewerExists(int id) {
 			return await context.Reviewers.AnyAsync(x => x.Id == id);
+		}
+		public async Task<bool> CreateReviewer(ReviewerDto reviewer) {
+			var model = mapper.Map<Reviewer>(reviewer);
+			var res = await repository.Create(model);
+			return true;
 		}
 	}
 }

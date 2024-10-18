@@ -38,5 +38,14 @@ namespace PokemonReviewAPI.Controllers
 			return res is null ? BadRequest() : Ok(res);
 		}
 
+		[HttpPost]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
+		public async Task<IActionResult> CreateReview(CreateReviewDto review){
+			if(!ModelState.IsValid) return BadRequest();
+			var res = await services.CreateReview(review);
+			return res ? Ok("Created") : StatusCode(500, ModelState);
+		}
 	}
 }

@@ -35,5 +35,17 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.GetReviewsByReviewer(reviewerId);
 			return res is null ? BadRequest() : Ok(res);
 		}
+
+		[HttpPost]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
+		public async Task<IActionResult> CreatePokemon(ReviewerDto reviewer) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
+			}
+			var res = await services.CreateReviewer(reviewer);
+			return res ? Ok("Created Successfully") : StatusCode(500, ModelState);
+		}
 	}
 }

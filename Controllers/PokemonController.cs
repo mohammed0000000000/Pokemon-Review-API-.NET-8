@@ -49,5 +49,16 @@ namespace PokemonReviewAPI.Controllers
 			var rating = await services.GetPokemonRating(pokemonId);
 			return Ok(rating);
 		}
-	}
+		[HttpPost]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(400)]
+		public async Task<IActionResult>CreatePokemon(CreatePokemonDto pokemon){
+			if(!ModelState.IsValid){
+				return BadRequest(ModelState);
+			}
+			pokemon.BirthDate = DateTime.Now;
+			var res = await services.CreatePokemon(pokemon);
+			return res ? Ok("Created Successfully") : StatusCode(500,ModelState);
+		}
+	} 
 }

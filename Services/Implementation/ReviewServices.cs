@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using PokemonReviewAPI.Data;
 using PokemonReviewAPI.DTO;
@@ -39,6 +41,20 @@ namespace PokemonReviewAPI.Services.Implementation
 
 		public async Task<bool> ReviewExists(int reviewId) {
 			return await context.Reviews.AnyAsync(x => x.Id == reviewId);
+		}
+
+		public async Task<bool> CreateReview(CreateReviewDto review) {
+
+			using (var transaction = context.Database.BeginTransaction()){
+				try {
+					var model = mapper.Map<Review>(review);
+					var res = await repository.Create(model);
+					return true;
+				} catch (Exception ex) {
+					await transaction.DisposeAsync();
+					return false;
+				}
+			}
 		}
 	}
 }

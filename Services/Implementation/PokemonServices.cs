@@ -58,5 +58,33 @@ namespace PokemonReviewAPI.Services.Implementation
 			var exist = await context.Pokemons.AnyAsync(pokemon => pokemon.Id == id);
 			return exist;
 		}
+
+		public async Task<bool>CreatePokemon(CreatePokemonDto pokemonDto){
+			using(var transactoin = context.Database.BeginTransaction()){
+			try
+			{
+					var pokemon = new Pokemon() { Name = pokemonDto.Name, BirthDate = pokemonDto.BirthDate };
+					var pokemonModel = await repository.Create(pokemon);
+					await context.SaveChangesAsync();
+
+					var pokemonOwner = new PokemonOwner() { OwnerId = pokemonDto.OwnerId, PokemonId = pokemonModel.Id };
+					var pokemonOwnerModel = await context.PokemonOwners.AddAsync(pokemonOwner);
+					await context.SaveChangesAsync();
+
+					var pokemonCategory = new PokemonCategory() { CategoryId = pokemonDto.CategoryId, PokemonId = pokemonModel.Id };
+					var pokemonCategoryModel = await context.PokemonCategories.AddAsync(pokemonCategory);
+					await context.SaveChangesAsync();
+
+					await transactoin.CommitAsync();
+					return true;
+				}
+				catch(Exception e){
+					await transactoin.DisposeAsync();
+					throw;
+				}
+
+			}
+			return false;
+		}
 	}
 }
