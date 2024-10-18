@@ -30,6 +30,13 @@ namespace PokemonReviewAPI.Controllers
 			return res is null ? BadRequest() : Ok(res);
 		}
 
+		[HttpGet("{pokemonId:int}/reviews")]
+		[ProducesResponseType(200, Type = typeof(IEnumerable<ReviewDto>))]
+		[ProducesResponseType(400)]
+		public async Task<IActionResult> GetPokemonReviews(int pokemonId) {
+			var res = await services.GetReviewsOfPokemon(pokemonId);
+			return res is null ? BadRequest() : Ok(res);
+		}
 
 	}
 }
