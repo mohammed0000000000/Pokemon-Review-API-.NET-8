@@ -10,5 +10,7 @@ namespace PokemonReviewAPI.Services.Contracts
 		Task<ICollection<OwnerDto>> GetOwners(int countryId);
 		Task<bool> CountryExists(int id);
 		Task<bool> CreateCountry(CreateCountryDto country);
+		Task<bool> UpdateCountry(int id, CreateCountryDto country);
+		Task<bool> DeleteCountry(int id);
 	}
 }

@@ -81,10 +81,20 @@ namespace PokemonReviewAPI.Services.Implementation
 				catch(Exception e){
 					await transactoin.DisposeAsync();
 					throw;
+					return false;
 				}
 
 			}
-			return false;
+		}
+
+		public async Task<bool> UpdatePokemon(int pokemonId, CreatePokemonDto pokemon) {
+			var model = mapper.Map<Pokemon>(pokemon);	
+			model.Id = pokemonId;
+			return await (repository.Update(model));
+		}
+
+		public async Task<bool> DeletePokemon(int id) {
+			return await (repository.DeleteById(id));
 		}
 	}
 }

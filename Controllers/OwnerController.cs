@@ -54,5 +54,27 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.CreateOwner(owner);
 			return res ? Ok("Created") : StatusCode(500, "Interal Server Error");
 		}
+
+		[HttpPut("{ownerId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> UpdateOwner(int ownerId, CreateOwnerDto owner) {
+			if (!ModelState.IsValid) BadRequest(ModelState);
+			var check = await services.OwnerExists(ownerId);
+			if (check == false) return BadRequest("Invalid Owner Id");
+			var res = await services.UpdateOwner(ownerId, owner);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
+		}
+		[HttpDelete("{ownerId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> DeleteOwner(int ownerId) {
+			var check = await services.OwnerExists(ownerId);
+			if (!check) return BadRequest("Invalid Owner Id");
+			var res = await services.DeleteOwner(ownerId);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
+		}
 	}
 }

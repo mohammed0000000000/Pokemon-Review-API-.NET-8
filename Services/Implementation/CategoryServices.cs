@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PokemonReviewAPI.Data;
 using PokemonReviewAPI.DTO;
@@ -52,6 +53,18 @@ namespace PokemonReviewAPI.Services.Implementation
 			var model = new Category(){ Name = category.Name };
 			var res = await repository.Create(model);
 			return res is not null;
+		}
+
+		public async Task<bool> UpdateCategory([FromQuery]int categoryId , CreateCategoryDto category) {
+		
+			var model = mapper.Map<Category>(category);
+			model.Id = categoryId;
+			var res = await repository.Update(model);
+			return res;
+		}
+
+		public async Task<bool> DeleteCategory([FromQuery]int id) {
+			return await repository.DeleteById(id);
 		}
 	}
 }

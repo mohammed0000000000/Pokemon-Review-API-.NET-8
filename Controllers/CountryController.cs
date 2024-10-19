@@ -55,8 +55,30 @@ namespace PokemonReviewAPI.Controllers
 			if (!ModelState.IsValid) {
 				return BadRequest(ModelState);
 			}
-			var res = await services.CreateCoutnry(country);
+			var res = await services.CreateCountry(country);
 			return res ? Ok("Created") : StatusCode(500, "Enteral Server Error");
+		}
+
+		[HttpPut("{countryId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> UpdateCountry(int countryId, CreateCountryDto country) {
+			if (!ModelState.IsValid) BadRequest(ModelState);
+			var check = await services.CountryExists(countryId);
+			if (check == false) return BadRequest("Invalid Category Id");
+			var res = await services.UpdateCountry(countryId, country);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
+		}
+		[HttpDelete("{countryId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> DeleteCountry(int countryId) {
+			var check = await services.CountryExists(countryId);
+			if (!check) return BadRequest("Invalid Category Id");
+			var res = await services.DeleteCountry(countryId);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
 		}
 	}
 }

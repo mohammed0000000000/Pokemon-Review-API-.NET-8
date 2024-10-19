@@ -47,5 +47,27 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.CreateReview(review);
 			return res ? Ok("Created") : StatusCode(500, ModelState);
 		}
+
+		[HttpPut("{reviewId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> UpdateReview(int reviewId, CreateReviewDto review) {
+			if (!ModelState.IsValid) BadRequest(ModelState);
+			var check = await services.ReviewExists(reviewId);
+			if (check == false) return BadRequest("Invalid review Id");
+			var res = await services.UpdateReview(reviewId, review);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
+		}
+		[HttpDelete("{reviewId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> DeleteReview(int reviewId) {
+			var check = await services.ReviewExists(reviewId);
+			if (!check) return BadRequest("Invalid review Id");
+			var res = await services.DeleteReview(reviewId);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
+		}
 	}
 }

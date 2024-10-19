@@ -56,5 +56,15 @@ namespace PokemonReviewAPI.Services.Implementation
 				}
 			}
 		}
+
+		public async Task<bool> UpdateReview(int reviewId, CreateReviewDto review) {
+			var model = mapper.Map<Review>(review);
+			model.Id = reviewId;
+			return await repository.Update(model);
+		}
+
+		public async Task<bool> DeleteReview(int reviewId) {
+			return await (repository.DeleteById(reviewId));
+		}
 	}
 }

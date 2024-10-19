@@ -10,5 +10,7 @@ namespace PokemonReviewAPI.Services.Contracts
 		Task<ICollection<PokemonDto>>GetPokemonsByOwner(int  ownerId);	
 		Task<bool> OwnerExists(int ownerId);
 		Task<bool> CreateOwner(CreateOwnerDto model);
+		Task<bool> UpdateOwner(int ownerId, CreateOwnerDto model);
+		Task<bool> DeleteOwner(int ownerId);
 	}
 }

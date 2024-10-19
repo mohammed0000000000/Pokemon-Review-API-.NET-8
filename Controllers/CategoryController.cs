@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonReviewAPI.DTO;
+using PokemonReviewAPI.Models;
 using PokemonReviewAPI.Services.Contracts;
 
 namespace PokemonReviewAPI.Controllers
@@ -59,6 +60,27 @@ namespace PokemonReviewAPI.Controllers
 			if (!ModelState.IsValid) BadRequest(ModelState);
 			var res = await services.CreateCategory(category);
 			return !res ? StatusCode(500) : Ok("Created");
+		}
+		[HttpPut("{categoryId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult> UpdateCategory(int categoryId,CreateCategoryDto category) {
+			if (!ModelState.IsValid) BadRequest(ModelState);
+			var check = await services.CategoryExists(categoryId);
+			if(check == false)return BadRequest("Invalid Category Id");
+			var res = await services.UpdateCategory(categoryId, category);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
+		}
+		[HttpDelete("{categoryId:int}")]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		public async Task<IActionResult>DeleteCategory(int categoryId){
+			var check = await services.CategoryExists(categoryId);
+			if(!check) return BadRequest("Invalid Category Id");
+			var res = await services.DeleteCategory(categoryId);
+			return res ? NoContent() : StatusCode(500, "Internal Server Error");
 		}
 	}
 }

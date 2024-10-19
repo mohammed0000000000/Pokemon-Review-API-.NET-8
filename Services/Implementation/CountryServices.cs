@@ -49,9 +49,20 @@ namespace PokemonReviewAPI.Services.Implementation
 		}
 
 		public async Task<bool>CreateCountry(CreateCountryDto country){
-			var model = new Country(){ Name = country.Name };
+			var model = mapper.Map<Country>(country);
 			var res = await repository.Create(model);
 			return res is not null;
+		}
+
+		public async Task<bool> UpdateCountry(int id, CreateCountryDto country) {
+			var model = mapper.Map<Country>(country);
+			model.Id = id;
+			var res = await repository.Update(model);
+			return res;
+		}
+
+		public async Task<bool> DeleteCountry(int id) {
+			return await (repository.DeleteById(id));
 		}
 	}
 }

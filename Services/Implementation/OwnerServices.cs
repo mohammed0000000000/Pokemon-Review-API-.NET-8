@@ -51,9 +51,19 @@ namespace PokemonReviewAPI.Services.Implementation
 		}
 
 		public async Task<bool> CreateOwner(CreateOwnerDto owner) {
-			var model = new Owner() { FirstName = owner.FirstName, LastName = owner.LastName, Gym = owner.Gym, CounteryId = owner.CounteryId };
+			var model = mapper.Map<Owner>(owner);
 			var res = await repository.Create(model);
 			return res is not null;
+		}
+
+		public async Task<bool> UpdateOwner(int ownerId, CreateOwnerDto owner) {
+			var model = mapper.Map<Owner>(owner);
+			model.Id = ownerId;
+			return await(repository.Update(model));
+		}
+
+		public async Task<bool> DeleteOwner(int ownerId) {
+			return await(repository.DeleteById(ownerId));
 		}
 	}
 }

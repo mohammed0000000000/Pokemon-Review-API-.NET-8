@@ -13,6 +13,12 @@ namespace PokemonReviewAPI.Helper
 			CreateMap<Owner, OwnerDto>().ReverseMap();
 			CreateMap<Review, ReviewDto>().ReverseMap();
 			CreateMap<Reviewer, ReviewerDto>().ReverseMap();
+
+			CreateMap<Pokemon, CreatePokemonDto>().ReverseMap();
+			CreateMap<Category, CreateCategoryDto>().ReverseMap();
+			CreateMap<Country, CreateCountryDto>().ReverseMap();
+			CreateMap<Owner, CreateOwnerDto>().ReverseMap();
+			CreateMap<Review, CreateReviewDto>().ReverseMap();
 		}
 	}
 }
