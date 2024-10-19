@@ -48,5 +48,10 @@ namespace PokemonReviewAPI.Services.Implementation
 			var pokemons = mapper.Map<List<PokemonDto>>(models);
 			return pokemons;
 		}
+		public async Task<bool> CreateCategory(CreateCategoryDto category){
+			var model = new Category(){ Name = category.Name };
+			var res = await repository.Create(model);
+			return res is not null;
+		}
 	}
 }

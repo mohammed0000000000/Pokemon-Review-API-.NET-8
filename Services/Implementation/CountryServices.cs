@@ -47,5 +47,11 @@ namespace PokemonReviewAPI.Services.Implementation
 			var owners = mapper.Map<List<OwnerDto>>(models);
 			return owners;
 		}
+
+		public async Task<bool>CreateCountry(CreateCountryDto country){
+			var model = new Country(){ Name = country.Name };
+			var res = await repository.Create(model);
+			return res is not null;
+		}
 	}
 }

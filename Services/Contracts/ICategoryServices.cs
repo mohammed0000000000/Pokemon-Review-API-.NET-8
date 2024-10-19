@@ -8,7 +8,7 @@ namespace PokemonReviewAPI.Services.Contracts
 		Task<CategoryDto> GetCategoryById(int id);
 		Task<CategoryDto> GetCategoryByName(string name);	
 		Task<ICollection<PokemonDto>>GetPokemonsByCategory(int categoryId);	
-		Task<bool> CategoryExists(int id);	
-
+		Task<bool> CategoryExists(int id);
+		Task<bool> CreateCategory(CreateCategoryDto model);
 	}
 }

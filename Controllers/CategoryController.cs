@@ -50,5 +50,15 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.GetPokemonsByCategory(categoryId);
 			return Ok(res);
 		}
+
+		[HttpPost]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(statusCode: 400)]
+		[ProducesResponseType(statusCode: 500)]
+		public async Task<IActionResult> CreateCategory(CreateCategoryDto category){
+			if (!ModelState.IsValid) BadRequest(ModelState);
+			var res = await services.CreateCategory(category);
+			return !res ? StatusCode(500) : Ok("Created");
+		}
 	}
 }

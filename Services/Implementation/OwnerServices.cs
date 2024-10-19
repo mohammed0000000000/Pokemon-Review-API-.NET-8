@@ -49,5 +49,11 @@ namespace PokemonReviewAPI.Services.Implementation
 			var exists = await context.Owners.AnyAsync(x => x.Id == ownerId);
 			return exists;
 		}
+
+		public async Task<bool> CreateOwner(CreateOwnerDto owner) {
+			var model = new Owner() { FirstName = owner.FirstName, LastName = owner.LastName, Gym = owner.Gym, CounteryId = owner.CounteryId };
+			var res = await repository.Create(model);
+			return res is not null;
+		}
 	}
 }

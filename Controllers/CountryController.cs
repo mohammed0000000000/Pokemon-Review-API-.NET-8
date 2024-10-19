@@ -46,5 +46,17 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.GetOwners(id);
 			return res is null ? BadRequest() : Ok(res);
 		}
+
+		[HttpPost]
+		[ProducesResponseType(200)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
+		public async Task<IActionResult> CreatCountry(CreateCountryDto country) {
+			if (!ModelState.IsValid) {
+				return BadRequest(ModelState);
+			}
+			var res = await services.CreateCoutnry(country);
+			return res ? Ok("Created") : StatusCode(500, "Enteral Server Error");
+		}
 	}
 }

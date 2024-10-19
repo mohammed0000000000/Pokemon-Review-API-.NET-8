@@ -44,5 +44,15 @@ namespace PokemonReviewAPI.Controllers
 			var res = await services.GetPokemonsByOwner(ownerId);
 			return res is null ? BadRequest() : Ok(res);
 		}
+
+		[HttpPost]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(400)]
+		[ProducesResponseType(500)]
+		public async Task<IActionResult> CreateOwner(CreateOwnerDto owner){
+			if(!ModelState.IsValid)return BadRequest(ModelState);
+			var res = await services.CreateOwner(owner);
+			return res ? Ok("Created") : StatusCode(500, "Interal Server Error");
+		}
 	}
 }
